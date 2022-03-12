@@ -73,9 +73,15 @@ $(() => {
         $('#ui-display>li.pdk').attr('class', '');
         el.className = 'pdk focus';
     });
-    $('#ui-display>li>input').each((index, el) => {
+    $('#ui-display>li.note>input').each((index, el) => {
         el.onchange = () => {
             display[el.parentNode.id.slice(11, el.parentNode.id.length)] = el.checked;
+            console.log(el.parentNode.id.slice(11, el.parentNode.id.length), display);
+        };
+    });
+    $('#ui-display>li.pdk>input').each((index, el) => {
+        el.onchange = () => {
+            display.block[$(el.parentNode).index()] = el.checked;
             console.log(el.parentNode.id.slice(11, el.parentNode.id.length), display);
         };
     });
