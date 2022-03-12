@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Blophy 制谱器 (demo)</title>
+    <link rel="shortcut icon" href="img/icon/icon.jpg"/>
+    <link rel="stylesheet" href="css/index.css"/>
+    <link rel="stylesheet" href="css/game.css"/>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/game.js"></script>
+</head>
+<body>
+	<div id="ui">
+        <div id="ui-time">
+            <audio id="ui-time-audio" src="audio/Happy life.mp3" controls></audio>
+        </div>
+        <div id="ui-menu">
+            <ul id="ui-menu-toolbar" page="main">
+            </ul>
+            <div id="ui-menu-spectralText" class="ui-menu-button">谱面源码</div>
+            <div id="ui-menu-settings" class="ui-menu-button">设置</div>
+        </div>
+        <ul id="ui-display">
+            <li id="ui-display-top" class="pdk">判定块 上<input type="checkbox" checked></li>
+            <li id="ui-display-left" class="pdk">判定块 左<input type="checkbox" checked></li>
+            <li id="ui-display-bottom" class="pdk">判定块 下<input type="checkbox" checked></li>
+            <li id="ui-display-right" class="pdk">判定块 右<input type="checkbox" checked></li>
+            <li id="ui-display-tap">Tap<input type="checkbox" checked></li>
+            <li id="ui-display-drag">Drag<input type="checkbox" checked></li>
+            <li id="ui-display-hold">Hold<input type="checkbox" checked></li>
+        </ul>
+        <textarea id="ui-spectralText"></textarea>
+        <canvas id="canvas" preload="auto">您的浏览器不支持 HTML5 canvas 标签。</canvas>
+    </div>
+    <div id="infos"></div>
+    <div id="effects"></div>
+    <div id="blur"></div>
+    <img id="bg"/>
+</body>
+</html>
