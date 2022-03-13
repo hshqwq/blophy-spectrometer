@@ -45,6 +45,21 @@ body{
     -webkit-transition: width .3s, height .3s;
     transition: width .3s, height .3s;
 }
+#ui-time-time{
+    width: 2cm;
+    height: 100%;
+    margin: 0 4px;
+    text-align: center;
+    border: none;
+    padding: 0 .25rem;
+    -webkit-appearance: none;
+    outline: none;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #00000088;
+    -webkit-transition: height .3s;
+    transition: height .3s;
+}
 #ui-time-audio{
     width: 100%;
     height: 100%;
@@ -129,8 +144,11 @@ body{
 #ui-display>*{
     display: none;
 }
-#ui-display:hover>li{
+#ui-display:hover li:not(.list){
     display: flex;
+}
+#ui-display:hover li.list{
+    display: block;
 }
 #ui-display:hover::before{
     display: block;

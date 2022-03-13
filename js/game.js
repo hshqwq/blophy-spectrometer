@@ -12,12 +12,18 @@ var display = {
     ],
     tap: true,
     drag: true,
-    hold: true
+    hold: true,
+    lineId: true,
+    noteId: true
 },
 spectral = {
     block: null,
     blockMoves: [
         {x: 0, y: 0, deg: 360, endDeg: 0, alpha: 0, endAlpha: 1, startT: 0, width: 3000, endWidth: 1500, endT: 800},
+        {endY: 300, deg: 0, endDeg: -180, endX: 1200, endWidth: 1500, startT: 800, endT: 1600},
+        {endY: 0, endDeg: -90, endX: 0, endWidth: 1500, startT: 1600, endT: 1800},
+        {endY: 0, endDeg: 0, endX: 0, endWidth: 1500, startT: 1800, endT: 1850},
+        {endDeg: 360, endAlpha: 0, startT: 1900, endWidth: 5000, endT: 2700}
     ],
     lines: [],
     lineMoves: [],
@@ -32,9 +38,9 @@ spectral = {
         {line: 2, note: 6, x: 0, y: 2000, endX: 0, endY: 'down', startT: 1300, endT: 1450},
         {line: 2, note: 7, x: 0, y: 2000, endX: 0, endY: 'down', startT: 1600, endT: 1700},
     ],
-}
+},
+audio, timeFocus = false;
 function gaming() {
-    var audio;
     function loadGame({music, bg = 'none', songName='?', author='unknown', tDfcy='EZ', dfcy='?'}) {
         audio = document.querySelector('#ui-time-audio');
         if (bg != 'none') {
@@ -53,6 +59,9 @@ function gaming() {
         }
         cvs = cvs.getContext('2d');
         cvs.transform(1, 0, 0, 1, $('#canvas').attr('width') / 2, 1125);
+        cvs.textAlign = 'center';
+        cvs.textBaseline = 'bottom';
+        cvs.font = '100px Phigros, Phigros cn, Tw Cen MT'
         cvs.save();
     }
     // init UI
@@ -79,15 +88,23 @@ function gaming() {
                 return Math.sqrt(Math.abs(x - endX) ** 2 + Math.abs(y - endY) ** 2);
             }
             function addLine(context, x, y, deg, width, alpha, notes) {
+                $('#ui-display-lines>ul').append(`<li class="line canEdit" data-lineId="${spectral.lines.length}">line&nbsp;${spectral.lines.length}</li>`);
                 spectral.lines.push(new line(context, x, y, deg, width, alpha));
             }
             function removeLine(from, to) {
+                for (let i = from; i < to; i++) {  
+                    $(`.line[data-lineId="${i}"]`).remove();
+                }
                 spectral.lines.remove(from, to);
             }
             function removeNote(from, to) {
+                for (let i = from; i < to; i++) {  
+                    $(`.note[data-noteId="${i}"]`).remove();
+                }
                 spectral.notes.remove(from, to);
             }
             function addNote(line, context, x, y, type, trueNote) {
+                $('#ui-display-notes>ul').append(`<li class="note canEdit" data-noteId="${spectral.notes.length}">note&nbsp;${spectral.notes.length}</li>`);
                 spectral.notes.push(new note(line, context, x, y, type, trueNote));
             }
             class line {
@@ -99,13 +116,17 @@ function gaming() {
                     this.width = width;
                     this.alpha = alpha;
                 }
-                draw(){
+                draw(id){
                     this.context.fillStyle = lineColor;
                     this.context.strokeColor = lineColor;
                     this.context.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2 + this.x, 1125 + this.y);
                     this.context.rotate(this.deg * Math.PI / 180);
                     this.context.globalAlpha = this.alpha;
                     this.context.fillRect(0 - this.width / 2, -4, this.width, 8);
+                    if (display.lineId) {
+                        this.context.fillText(String(id), 0, 0);
+                        this.context.fill();
+                    }
                     this.context.restore();
                 }
                 move({x = this.x, y = this.y, deg = this.deg, width = this.width, alpha = this.alpha, endX = 0, endY = 0, endDeg = 0, endWidth = 10000, endAlpha = 1, startT, endT} = {}) {
@@ -142,7 +163,7 @@ function gaming() {
                     this.type = type;
                     this.over = false;
                 }
-                draw() {
+                draw(id) {
                     let noteImg;
                     if (!this.over && display[this.type]) {
                         if (spectral.lines[this.line] === undefined) {
@@ -156,11 +177,14 @@ function gaming() {
                                 noteImg = imgs.drag;
                                 break;
                         }
-                        this.context.strokeColor = lineColor;
                         this.context.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2 + spectral.lines[this.line].x, 1125 + spectral.lines[this.line].y);
                         this.context.rotate(spectral.lines[this.line].deg * Math.PI / 180);
                         this.context.globalAlpha = 1;
                         this.context.drawImage(noteImg, this.x - 150, 0 - (this.y + 12.5), 300, 25);
+                        if (display.noteId) {
+                            this.context.globalAlpha = 1;
+                            this.context.fillText(id, this.x, 0 - (this.y + 12.5));
+                        }
                         this.context.restore();
                     }
                 }
@@ -205,7 +229,7 @@ function gaming() {
                 }
             }
             class block {
-                constructor(context = cvs, x = 0, y = 0, deg = 0, width = 1000, alpha = 1) {
+                constructor(context = cvs, x = 0, y = 0, deg = 0, width = 1500, alpha = 1) {
                     this.context = context;
                     this.x = x;
                     this.y = y;
@@ -282,6 +306,9 @@ function gaming() {
                     startTime = now;
                     if (seconds) {
                         time = audio.currentTime * 100;
+                        if (!timeFocus) {
+                            document.getElementById('ui-time-time').value = Math.floor(time);
+                        }
                     }
                     cvs.clearRect(-10000, -10000, 20000, 20000);
                     for (let i = 0; i < spectral.blockMoves.length; i++) {
@@ -301,15 +328,15 @@ function gaming() {
                     }
                     for(var i = 0; i < 4;i++) {
                         if (display.block[i]) {
-                            spectral.lines[i].draw(cvs);
+                            spectral.lines[i].draw(i);
                         }
                     }
                     for(var i = 4; i < spectral.lines.length; i++) {
-                        spectral.lines[i].draw(cvs);
+                        spectral.lines[i].draw(i);
                     }
                     for(var i = 0; i < spectral.notes.length; i++) {
                         if (display.block[spectral.notes[i].line] || spectral.notes[i].line > 3) {
-                            spectral.notes[i].draw(cvs);
+                            spectral.notes[i].draw(i);
                         }
                     }
                     // console.log('canvas refresh', now, startTime, seconds);

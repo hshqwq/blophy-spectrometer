@@ -67,17 +67,34 @@ let saveed = false, tools = {main: [{name: 'note', list: 'note', type: 'list'}, 
 $(() => {
     $('#ui-spectralText').hide();
     changeTool('main');
-    $('#ui-display>li.pdk:first-child').addClass('focus');
-    $('#ui-display>li.pdk').unbind('click').click((event) => {
+    $('#ui-display>li.canEdit').unbind('click').click((event) => {
         let el = event.currentTarget;
-        $('#ui-display>li.pdk').attr('class', '');
-        el.className = 'pdk focus';
+        $('#ui-display>li.canEdit').removeClass('focus')
+        el.className += ' focus';
     });
-    $('#ui-display>li.note>input').each((index, el) => {
+    $('#ui-display>li.note>input,#ui-display>li.id>input').each((index, el) => {
         el.onchange = () => {
             display[el.parentNode.id.slice(11, el.parentNode.id.length)] = el.checked;
-            console.log(el.parentNode.id.slice(11, el.parentNode.id.length), display);
         };
+    });
+    $('#ui-display-lines,#ui-display-notes>ul').slideUp();
+    $('#ui-display-lines').unbind('click').click((event) => {
+        let el = event.target;
+        if (el.className.includes('line')) {
+            $('#ui-display *.focus').removeClass('focus');
+            $(el).addClass('focus');
+        } else {
+            $('#ui-display-lines>ul').slideToggle();
+        }
+    });
+    $('#ui-display-notes').unbind('click').click((event) => {
+        let el = event.target;
+        if (el.className.includes('note')) {
+            $('#ui-display *.focus').removeClass('focus');
+            $(el).addClass('focus');
+        } else {
+            $('#ui-display-notes>ul').slideToggle();
+        }
     });
     $('#ui-display>li.pdk>input').each((index, el) => {
         el.onchange = () => {
@@ -86,8 +103,18 @@ $(() => {
         };
     });
     $('#ui-menu-spectralText').unbind('click').click(() => {
-        console.log('click');
         $('#ui-spectralText').text(JSON.stringify(spectral));
         $('#ui-spectralText').toggle();
+    });
+    $('#ui-menu-spectralText').unbind('change').on('change', () => {
+        spectral = JSON.parse($('#ui-spectralText').text());
+    });
+    $('#ui-time-time').unbind('focus').on('focus', () => {
+        timeFocus = true;
+    });
+    $('#ui-time-time').unbind('change').on('change', () => {
+        audio.currentTime = Number(document.getElementById('ui-time-time').value) / 100;
+        document.getElementById('ui-time-time').value = audio.currentTime * 100;
+        timeFocus = false;
     });
 });
