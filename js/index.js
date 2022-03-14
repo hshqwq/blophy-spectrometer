@@ -112,9 +112,11 @@ $(() => {
     $('#ui-time-time').unbind('focus').on('focus', () => {
         timeFocus = true;
     });
+    $('#ui-time-time').unbind('blur').on('blur', () => {
+        timeFocus = false;
+    });
     $('#ui-time-time').unbind('change').on('change', () => {
         audio.currentTime = Number(document.getElementById('ui-time-time').value) / 100;
         document.getElementById('ui-time-time').value = audio.currentTime * 100;
-        timeFocus = false;
     });
 });
