@@ -207,7 +207,8 @@
                 "speech" : {
                     "ifly" : {}
                 },
-                "share" : {}
+                "share" : {},
+                "ad" : {}
             }
         }
     },

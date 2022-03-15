@@ -16,34 +16,37 @@ var display = {
     lineId: true,
     noteId: true
 },
-spectral = {
-    block: null,
-    blockMoves: [
-        {x: 0, y: 0, deg: 360, endDeg: 0, alpha: 0, endAlpha: 1, bezier: {x1: 0.75, y1: 1, x2: 0.75, y2: 1}, startT: 0, width: 30, endWidth: 15, endT: 800},
-        {endY: 3, deg: 0, endDeg: -180, endX: 12, endWidth: 15, startT: 800, endT: 1600},
-        {endY: 0, endDeg: -90, endX: 0, endWidth: 15, startT: 1600, endT: 1800},
-        {endY: 0, endDeg: 0, endX: 0, endWidth: 15, startT: 1800, endT: 1850},
-        {endDeg: 360, endAlpha: 0, startT: 1900, endWidth: 50, endT: 2700}
-    ],
-    lines: [],
-    lineMoves: [
-        {line: 4, x: 0, y: -6, endX: 0, endY: 6, bezier: {x1: 0, y1: 0, x2: 0, y2: 1}, startT: 0, endT: 500}
-    ],
-    notes: [],
-    noteMoves: [
-        {line: 0, note: 0, x: 0, y: 20, endX: 0, endY: 5, startT: 1200, endT: 1350},
-        {line: 1, note: 1, x: -5, y: 20, endX: 5, endY: 'down', startT: 1300, endT: 1450},
-        {line: 0, note: 2, x: -5, y: 20, endX: 5, endY: 'down', type: 'drag', startT: 1700, endT: 1800},
-        {line: 1, note: 3, x: -5, y: 20, endX: 5, endY: 'down', type: 'hold', height: 150, endHeight: 100, startT: 1650, endT: 1750},
-        {line: 0, note: 4, x: -5, y: 20, endX: 5, endY: 'down', type: 'drag', startT: 1600, endT: 1700},
-        {line: 3, note: 5, x: 0, y: 20, endX: 0, endY: 'down', startT: 1200, endT: 1400},
-        {line: 2, note: 6, x: 0, y: 20, endX: 0, endY: 'down', startT: 1300, endT: 1450},
-        {line: 2, note: 7, x: 0, y: 20, endX: 0, endY: 'down', startT: 1600, endT: 1700},
-        {line: 4, note: 8, x: 0, y: 20, endX: 0, endY: 'down',bezier: {x1: 0, y1: 0, x2: 0, y2: 0.5} , startT: 800, endT: 1000},
-    ],
-},
-audio, timeFocus = false;
+timeFocus = false;
+
 function gaming() {
+    if (spectral == null) {
+        spectral = {
+            block: null,
+            blockMoves: [
+                {x: 0, y: 0, deg: 360, endDeg: 0, alpha: 0, endAlpha: 1, bezier: {x1: 0.75, y1: 1, x2: 0.75, y2: 1}, startT: 0, width: 30, endWidth: 15, endT: 800},
+                {endY: 3, deg: 0, endDeg: -180, endX: 12, endWidth: 15, startT: 800, endT: 1600},
+                {endY: 0, endDeg: -90, endX: 0, endWidth: 15, startT: 1600, endT: 1800},
+                {endY: 0, endDeg: 0, endX: 0, endWidth: 15, startT: 1800, endT: 1850},
+                {endDeg: 360, endAlpha: 0, startT: 1900, endWidth: 50, endT: 2700}
+            ],
+            lines: [],
+            lineMoves: [
+                {line: 4, x: 0, y: -6, endX: 0, endY: 6, bezier: {x1: 0, y1: 0, x2: 0, y2: 1}, startT: 0, endT: 500}
+            ],
+            notes: [],
+            noteMoves: [
+                {line: 0, note: 0, x: 0, y: 20, endX: 0, endY: 5, startT: 1200, endT: 1350},
+                {line: 1, note: 1, x: -5, y: 20, endX: 5, endY: 'down', startT: 1300, endT: 1450},
+                {line: 0, note: 2, x: -5, y: 20, endX: 5, endY: 'down', type: 'drag', startT: 1700, endT: 1800},
+                {line: 1, note: 3, x: -5, y: 20, endX: 5, endY: 'down', type: 'hold', height: 150, endHeight: 100, startT: 1650, endT: 1750},
+                {line: 0, note: 4, x: -5, y: 20, endX: 5, endY: 'down', type: 'drag', startT: 1600, endT: 1700},
+                {line: 3, note: 5, x: 0, y: 20, endX: 0, endY: 'down', startT: 1200, endT: 1400},
+                {line: 2, note: 6, x: 0, y: 20, endX: 0, endY: 'down', startT: 1300, endT: 1450},
+                {line: 2, note: 7, x: 0, y: 20, endX: 0, endY: 'down', startT: 1600, endT: 1700},
+                {line: 4, note: 8, x: 0, y: 20, endX: 0, endY: 'down',bezier: {x1: 0, y1: 0, x2: 0, y2: 0.5} , startT: 800, endT: 1000},
+            ],
+        }
+    }
     function loadGame({music, bg = 'none', songName='?', author='unknown', tDfcy='EZ', dfcy='?'}) {
         audio = document.querySelector('#ui-time-audio');
         if (bg != 'none') {
@@ -90,9 +93,9 @@ function gaming() {
             function distance(x, y, endX, endY){
                 return Math.sqrt(Math.abs(x - endX) ** 2 + Math.abs(y - endY) ** 2);
             }
-            function addLine(context, x, y, deg, width, alpha) {
+            function addLine(x, y, deg, width, alpha) {
                 $('#ui-display-lines>ul').append(`<li class="line canEdit" data-lineId="${spectral.lines.length}">line&nbsp;${spectral.lines.length}</li>`);
-                spectral.lines.push(new line(context, x, y, deg, width, alpha));
+                spectral.lines.push(new line(x, y, deg, width, alpha));
             }
             function removeLine(from, to) {
                 for (let i = from; i < to; i++) {  
@@ -106,13 +109,12 @@ function gaming() {
                 }
                 spectral.notes.remove(from, to);
             }
-            function addNote(line, context, x, y, type, trueNote, height) {
+            function addNote(line, x, y, type, trueNote, height) {
                 $('#ui-display-notes>ul').append(`<li class="note canEdit" data-noteId="${spectral.notes.length}">note&nbsp;${spectral.notes.length}</li>`);
-                spectral.notes.push(new note(line, context, x, y, type, trueNote, height));
+                spectral.notes.push(new note(line, x, y, type, trueNote, height));
             }
             class line {
-                constructor(context = cvs, x = 0, y = 0, deg = 0, width = 10000, alpha = 1) {
-                    this.context = context;
+                constructor(x = 0, y = 0, deg = 0, width = 10000, alpha = 1) {
                     this.x = x;
                     this.y = y;
                     this.deg = deg;
@@ -120,17 +122,17 @@ function gaming() {
                     this.alpha = alpha;
                 }
                 draw(id){
-                    this.context.fillStyle = lineColor;
-                    this.context.strokeColor = lineColor;
-                    this.context.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2 + this.x * 100, 1125 + this.y * 100);
-                    this.context.rotate(this.deg * Math.PI / 180);
-                    this.context.globalAlpha = this.alpha;
-                    this.context.fillRect(0 - this.width * 50, -4, this.width * 100, 8);
+                    cvs.fillStyle = lineColor;
+                    cvs.strokeColor = lineColor;
+                    cvs.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2 + this.x * 100, 1125 + this.y * 100);
+                    cvs.rotate(this.deg * Math.PI / 180);
+                    cvs.globalAlpha = this.alpha;
+                    cvs.fillRect(0 - this.width * 50, -4, this.width * 100, 8);
                     if (display.lineId) {
-                        this.context.globalAlpha = 1;
-                        this.context.fillText(String(id), 0, 0);
+                        cvs.globalAlpha = 1;
+                        cvs.fillText(String(id), 0, 0);
                     }
-                    this.context.restore();
+                    cvs.restore();
                 }
                 move({x = this.x, y = this.y, deg = this.deg, width = this.width, alpha = this.alpha, endX = 0, endY = 0, endDeg = 0, endWidth = 10000, endAlpha = 1, bezier = false, startT, endT} = {}) {
                     if (time <= endT) {
@@ -173,9 +175,8 @@ function gaming() {
                 }
             }
             class note {
-                constructor(line = 0, context = cvs, x = 0, y = 5000, type = 'tap', trueNote = false, bezier = false, height = 100) {
+                constructor(line = 0, x = 0, y = 5000, type = 'tap', trueNote = false, bezier = false, height = 100) {
                     this.line = line;
-                    this.context = context;
                     this.x = x;
                     this.y = y;
                     this.type = type;
@@ -199,19 +200,19 @@ function gaming() {
                                 noteImg = imgs.hold;
                                 break;
                         }
-                        this.context.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2 + spectral.lines[this.line].x * 100, 1125 + spectral.lines[this.line].y * 100);
-                        this.context.rotate(spectral.lines[this.line].deg * Math.PI / 180);
-                        this.context.globalAlpha = 1;
+                        cvs.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2 + spectral.lines[this.line].x * 100, 1125 + spectral.lines[this.line].y * 100);
+                        cvs.rotate(spectral.lines[this.line].deg * Math.PI / 180);
+                        cvs.globalAlpha = 1;
                         if (this.type == 'hold') {
-                            this.context.drawImage(noteImg, this.x * 100 - 150, 0 - (this.y * 100 + this.height * 100 - 12.5), 300, this.height * 100);
+                            cvs.drawImage(noteImg, this.x * 100 - 150, 0 - (this.y * 100 + this.height * 100 - 12.5), 300, this.height * 100);
                         } else {
-                            this.context.drawImage(noteImg, this.x * 100 - 150, 0 - (this.y * 100 + 12.5), 300, 25);
+                            cvs.drawImage(noteImg, this.x * 100 - 150, 0 - (this.y * 100 + 12.5), 300, 25);
                         }
                         if (display.noteId) {
-                            this.context.globalAlpha = 1;
-                            this.context.fillText(id, this.x * 100, 0 - (this.y * 100 + 12.5));
+                            cvs.globalAlpha = 1;
+                            cvs.fillText(id, this.x * 100, 0 - (this.y * 100 + 12.5));
                         }
-                        this.context.restore();
+                        cvs.restore();
                     }
                 }
                 move({line, x = this.x, y = this.y, endX = this.x, endY = this.y, bezier=false, startT, endT, type = 'tap', height = this.height, endHeight = this.height} = {}) {
@@ -289,8 +290,7 @@ function gaming() {
                 }
             }
             class block {
-                constructor(context = cvs, x = 0, y = 0, deg = 0, width = 1500, alpha = 1) {
-                    this.context = context;
+                constructor(x = 0, y = 0, deg = 0, width = 1500, alpha = 1) {
                     this.x = x;
                     this.y = y;
                     this.deg = deg;
@@ -352,6 +352,7 @@ function gaming() {
                 constructor() {
                     this.init();
                     this.process();
+                    document.getElementById('ui-time-time').value = 0;
                 }
                 init() {
                     addNote(0, cvs, 0, 5000, 'tap', true);
@@ -416,6 +417,3 @@ function gaming() {
         }
     };
 }
-$(() => {
-    gaming();
-});
