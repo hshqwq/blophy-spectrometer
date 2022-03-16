@@ -189,7 +189,7 @@ $(() => {
         audio.oncanplaythrough = () => {
             $('#ui-spectralText').hide();
             changeTool('main');
-            gaming();
+            setTimeout(gaming, 3000);
             $('#ui-display>li.canEdit').unbind('click').click((event) => {
                 let el = event.currentTarget;
                 $('#ui-display>li.canEdit').removeClass('focus')
