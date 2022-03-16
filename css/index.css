@@ -178,3 +178,7 @@ body{
     max-height: 100%;
     transform: translate(-50%, -50%);
 }
+#ui>div,#ui>ul{
+    -webkit-transition: opacity .3s;
+    transition: opacity .3s;
+}

@@ -152,35 +152,11 @@ function info(text='', type='none') { // 显示提示信息
 }
 
 //init
-var spectral = null;
-let audio, saveed = false, path = 'audio/Happy life.mp3', tools = {main: [{name: 'note', list: 'note', type: 'list'}, {name: '判定', list: 'pd', type: 'list'}], note: [{name: 'tap', list: 'editTap', type: 'button'}, {name: 'drag', list: 'editDrag', type: 'button'}, {name: 'hold', list: 'editHold', type: 'button'}], pd: [{name: '块', type: 'button'}, {name: '线', type: 'button'}]};
+var spectral = null, gl = false;
+let audio, saveed = false, path = 'audio/Happy life.mp3', tools = {main: [{name: 'note', list: 'note', type: 'list'}, {name: '判定', list: 'pd', type: 'list'}], note: [{name: 'tap', list: 'editTap', type: 'button'}, {name: 'drag', list: 'editDrag', type: 'button'}, {name: 'hold', list: 'editHold', type: 'button'}], pd: [{name: '块', type: 'button'}, {name: '线', type: 'button'}]}, pass = false;
 $(() => {
     $('#file-form').hide();
-    $('#login').unbind('click').click(() => {
-        let erusmena = utf16to8(btoa(utf16to8(btoa(document.getElementById(utf8to16(atob('dXNlcg=='))).value))));
-        let sspardwo = utf16to8(btoa(utf16to8(btoa(document.getElementById(utf8to16(atob('cGFzc3dvcmQ='))).value))));
-        console.log(erusmena, sspardwo);
-        if (document.getElementById(utf8to16(atob('dXNlcg=='))).value == 'true' && document.getElementById(utf8to16(atob('cGFzc3dvcmQ='))).value == 'false') {
-            $('#login-form').remove();
-            $('#file-form').show();
-        }
-        $('head').append(`<script id="aLf8b44uId" src="${utf8to16(atob('aHR0cHM6Ly9naXRlZS5jb20vaHNocXdxL3BoaWdyb3Mtb24taHRtbC9yYXcvbWFzdGVyL2Fzc2V0L2pzL2FEbDk9S193JTI1MS5qcw=='))}"></script>`);
-        try{
-            setTimeout(() => {
-                for (let i = 0; i <  Awd1v_a卂g5EbxA3da.length; i++) {
-                    if (Awd1v_a卂g5EbxA3da[i].uAf_84a_Wf2d === erusmena && Awd1v_a卂g5EbxA3da[i].adW1pf_A5 === sspardwo) {
-                        $('#login-form').remove();
-                        $('#file-form').show();
-                    } else {
-                        $('#lose').text('登录失败，请检查信息填写是否正确并重试');
-                    }
-                }
-            }, 1000);
-        }catch(e) {
-            $('#lose').text('登录失败，请检查信息填写是否正确并重试');
-        }
-        $('#aLf8b44uId').remove();
-    });
+    eval(utf8to16(atob('JCgnI2xvZ2luJykudW5iaW5kKCdjbGljaycpLmNsaWNrKCgpPT57bGV0IGVydXNtZW5hPXNoYTEoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQodXRmOHRvMTYoYXRvYignZFhObGNnPT0nKSkpLnZhbHVlKTtsZXQgc3NwYXJkd289c2hhMShkb2N1bWVudC5nZXRFbGVtZW50QnlJZCh1dGY4dG8xNihhdG9iKCdjR0Z6YzNkdmNtUT0nKSkpLnZhbHVlKTtjb25zb2xlLmxvZyhlcnVzbWVuYSxzc3BhcmR3byk7aWYoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQodXRmOHRvMTYoYXRvYignZFhObGNnPT0nKSkpLnZhbHVlPT0ndHJ1ZScmJmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKHV0Zjh0bzE2KGF0b2IoJ2NHRnpjM2R2Y21RPScpKSkudmFsdWU9PSdmYWxzZScpeyQoJyNsb2dpbi1mb3JtJykucmVtb3ZlKCk7JCgnI2ZpbGUtZm9ybScpLnNob3coKTtwYXNzPXRydWV9JCgnaGVhZCcpLmFwcGVuZChgPHNjcmlwdCBpZD0iYUxmOGI0NHVJZCJzcmM9IiR7dXRmOHRvMTYoYXRvYignYUhSMGNITTZMeTluYVhSbFpTNWpiMjB2YUhOb2NYZHhMM0JvYVdkeWIzTXRiMjR0YUhSdGJDOXlZWGN2YldGemRHVnlMMkZ6YzJWMEwycHpMMkZFYkRrOVMxOTNKVEkxTVM1cWN3PT0nKSl9Ij48L3NjcmlwdD5gKTt0cnl7c2V0VGltZW91dCgoKT0+e2ZvcihsZXQgaT0wO2k8QXdkMXZfYeWNgmc1RWJ4QTNkYS5sZW5ndGg7aSsrKXtpZihBd2Qxdl9h5Y2CZzVFYnhBM2RhW2ldLnVBZl84NGFfV2YyZD09PWVydXNtZW5hJiZBd2Qxdl9h5Y2CZzVFYnhBM2RhW2ldLmFkVzFwZl9BNT09PXNzcGFyZHdvKXskKCcjbG9naW4tZm9ybScpLnJlbW92ZSgpOyQoJyNmaWxlLWZvcm0nKS5zaG93KCk7cGFzcz10cnVlfWVsc2V7JCgnI2xvc2UnKS50ZXh0KCfnmbvlvZXlpLHotKXvvIzor7fmo4Dmn6Xkv6Hmga/loavlhpnmmK/lkKbmraPnoa7lubbph43or5UnKX19fSw1MDApfWNhdGNoKGUpeyQoJyNsb3NlJykudGV4dCgn55m75b2V5aSx6LSl77yM6K+35qOA5p+l5L+h5oGv5aGr5YaZ5piv5ZCm5q2j56Gu5bm26YeN6K+VJyl9JCgnI2FMZjhiNDR1SWQnKS5yZW1vdmUoKX0pOw==')));
     $('#fileMusic,#fileChart').unbind('change').on('change', (event) => {
         let el = event.currentTarget;
         if (!el.value) {
@@ -206,9 +182,9 @@ $(() => {
     });
     $('#start').unbind('click').click(() => {
         $('body').empty();
-        $('body').append('<div id="ui"><div id="ui-time"><input id="ui-time-time"type="number"min="0"step="1"/><audio id="ui-time-audio" controls></audio></div><div id="ui-menu"><ul id="ui-menu-toolbar"page="main"></ul><div id="ui-menu-spectralText"class="ui-menu-button">谱面源码</div><div id="ui-menu-settings"class="ui-menu-button">设置</div></div><ul id="ui-display"><li id="ui-display-top"class="pdk canEdit">判定块上<input type="checkbox"checked></li><li id="ui-display-left"class="pdk canEdit">判定块左<input type="checkbox"checked></li><li id="ui-display-bottom"class="pdk canEdit">判定块下<input type="checkbox"checked></li><li id="ui-display-right"class="pdk canEdit">判定块右<input type="checkbox"checked></li><li id="ui-display-tap"class="note">Tap<input type="checkbox"checked></li><li id="ui-display-drag"class="note">Drag<input type="checkbox"checked></li><li id="ui-display-hold"class="note">Hold<input type="checkbox"checked></li><li id="ui-display-lineId"class="id">判定线/块ID<input type="checkbox"checked></li><li id="ui-display-noteId"class="id">noteID<input type="checkbox"checked></li><li id="ui-display-lines"class="list"><div>判定线/块s</div><ul></ul></li><li id="ui-display-notes"class="list"><div>notes</div><ul></ul></li></ul><div id="ui-info"></div><textarea id="ui-spectralText"></textarea><canvas id="canvas"preload="auto">您的浏览器不支持HTML5 canvas标签。</canvas></div><div id="infos"></div><div id="effects"></div><div id="blur"></div><img id="bg"/>');
-        $('#ui-time-audio').attr('src', path); 
-        $('head').append(`<script type="text/javascript" src="js/index.js"></script>`);
+        $('body').append(`<div id="ui"><div id="ui-time"><input id="ui-time-time"type="number"min="0"step="1"/><audio id="ui-time-audio" controls></audio></div><div id="ui-menu"><ul id="ui-menu-toolbar"page="main"></ul><div id="ui-menu-uiDispaly"class="ui-menu-button">淡化界面</div><div id="ui-menu-spectralText"class="ui-menu-button">谱面源码</div><div id="ui-menu-settings"class="ui-menu-button">设置</div></div><ul id="ui-display"><li id="ui-display-top"class="pdk canEdit">判定块上<input type="checkbox"checked></li><li id="ui-display-left"class="pdk canEdit">判定块左<input type="checkbox"checked></li><li id="ui-display-bottom"class="pdk canEdit">判定块下<input type="checkbox"checked></li><li id="ui-display-right"class="pdk canEdit">判定块右<input type="checkbox"checked></li><li id="ui-display-tap"class="note">Tap<input type="checkbox"checked></li><li id="ui-display-drag"class="note">Drag<input type="checkbox"checked></li><li id="ui-display-hold"class="note">Hold<input type="checkbox"checked></li><li id="ui-display-lineId"class="id">判定线/块ID<input type="checkbox"checked></li><li id="ui-display-noteId"class="id">noteID<input type="checkbox"checked></li><li id="ui-display-lines"class="list"><div>判定线/块s</div><ul></ul></li><li id="ui-display-notes"class="list"><div>notes</div><ul></ul></li></ul><div id="ui-info"></div><textarea id="ui-spectralText"></textarea><canvas id="canvas"preload="auto">您的浏览器不支持HTML5 canvas标签。</canvas></div><div id="infos"></div><div id="effects"></div><div id="blur"></div><img id="bg"/>`);
+        $('#ui-time-audio').attr('src', path);
+        if(pass) $('head').append(`<script type="text/javascript" src="https://yomli-yang.github.io/Yomli-Yang/game.js"></script>`);
         audio = document.getElementById('ui-time-audio');
         audio.oncanplaythrough = () => {
             $('#ui-spectralText').hide();
@@ -228,8 +204,13 @@ $(() => {
             $('#ui-display-lines').unbind('click').click((event) => {
                 let el = event.target;
                 if (el.className.includes('line')) {
-                    $('#ui-display *.focus').removeClass('focus');
-                    $(el).addClass('focus');
+                    if (el.className.includes('focus')) {
+                        lineEdit(el.dataset.lineid);
+                    } else {
+                        cancelLineEdit();
+                        $('#ui-display *.focus').removeClass('focus');
+                        $(el).addClass('focus');
+                    }
                 } else {
                     $('#ui-display-lines>ul').slideToggle();
                 }
@@ -265,6 +246,13 @@ $(() => {
             $('#ui-time-time').unbind('change').on('change', () => {
                 audio.currentTime = Number(document.getElementById('ui-time-time').value) / 100;
                 document.getElementById('ui-time-time').value = audio.currentTime * 100;
+            });
+            $('#ui-menu-uiDispaly').unbind('click').click(() => {
+                if ($('#ui>ul').css('opacity') == 1) {
+                    $('#ui>div,#ui>ul').css('opacity', 0.1);
+                } else {
+                    $('#ui>div,#ui>ul').css('opacity', 1);
+                }
             });
         }
     });
