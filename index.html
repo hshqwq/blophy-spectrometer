@@ -7,8 +7,9 @@
     <link rel="shortcut icon" href="img/icon/icon.jpg"/>
     <link rel="stylesheet" href="css/index.css"/>
     <link rel="stylesheet" href="css/game.css"/>
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.bootcss.com/js-sha1/0.6.0/sha1.js"></script>
+    <script type="text/javascript" src="js/general.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </head>
 <body>
@@ -26,12 +27,12 @@
     </div>
     <div id="file-form">
         <div>
-            <span>上传音乐: </span>
+            <span>上传音乐(必选): </span>
             <input type="file" accept=".mp3, .ogg, .wav" alt="浏览器/应用不支持上传文件" id="fileMusic"></input>
         </div>
         <div>
-            <span>上传谱面文件: </span>
-            <input type="file" accept=".json" alt="浏览器/应用不支持上传文件" id="fileChart"></input>
+            <span>上传谱面文件(可选): </span>
+            <input type="file" accept=".json, .lem" alt="浏览器/应用不支持上传文件" id="fileChart"></input>
         </div>
         <span id="start" style="display: none">开始制谱</span>
     </div>

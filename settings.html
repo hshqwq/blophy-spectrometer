@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta chars="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="网页版Phigros" />
+    <meta name="description" content="Phigros复刻" />
+    <meta name="author" content="Yomli" />
+    <meta name="keywords" content="blophy,Blphy" />
+    <!-- 控制网页帧率，建议关闭 -->
+    <!-- <meta http-equiv="refresh" content="60"/> -->
+    <!-- 设定默认文件加载位置为gitee，以加快资源加载，开发时请视情况关闭/开启（请自行解决跨域问题） -->
+    <!-- <base href="https://www.gitee.com/hshqwq/phigros-on-html/raw/master/"> -->
+    <title>Blophy settings</title>
+    <link rel="shortcut icon" href="img/icon/icon.jpg" />
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="js/general.js"></script>
+    <script src="js/settings.js"></script>
+    <style id="OFBlurCss"></style>
+</head>
+
+<body page="ready">
+    <ul id="infoList"></ul>
+    <div id="ui">
+        <div id="selects">
+            <div id="sets">
+                <div>
+                    <div id="pmyc" class="set set-range">
+                        <div class="set-title">
+                            <h4>谱面延迟</h4>
+                            <p id="pmyc-yc"></p>
+                        </div>
+                        <span class="set-range-lessen"></span><input type="range" min="-400" max="600" value="0"
+                            step="5"></input><span class="set-range-add"></span>
+                    </div>
+                    <div id="listProportion" class="set set-radio">
+                        <h4 class="set-title">更改屏幕比例</h4>
+                        <div>
+                            <span>16:9<input type="radio" name="proportion" value="16:9"></span>
+                            <span>4:3<input type="radio" name="proportion" value="4:3"></span>
+                        </div>
+                    </div>
+                    <div id="buttonSize" class="set set-range">
+                        <h4 class="set-title">按键缩放</h4>
+                        <span class="set-range-lessen"></span>
+                        <input type="range" min="100" max="200" value="100" step="5"></input>
+                        <span class="set-range-add"></span>
+                    </div>
+                    <div id="bgBlur" class="set set-range">
+                        <h4 class="set-title">背景模糊</h4>
+                        <span class="set-range-lessen"></span><input type="range" min="0" max="20" value="15"
+                            step="1"></input><span class="set-range-add"></span>
+                    </div>
+                    <div id="OFAudio" class="set set-check">
+                        <h4 class="set-title">开启打击音效</h4>
+                        <input type="checkbox">
+                    </div>
+                    <div id="gameAudio" class="set set-range">
+                        <h4 class="set-title">音乐音量</h4>
+                        <span class="set-range-lessen"></span><input type="range" min="0" max="100" value="100"
+                            step="1"></input><span class="set-range-add"></span>
+                    </div>
+                    <div id="uiAudio" class="set set-range">
+                        <h4 class="set-title">界面音效音量</h4>
+                        <span class="set-range-lessen"></span><input type="range" min="0" max="100" value="100"
+                            step="1"></input><span class="set-range-add"></span>
+                    </div>
+                    <div id="touchAudio" class="set set-range">
+                        <h4 class="set-title">打击音效音量</h4>
+                        <span class="set-range-lessen"></span><input type="range" min="0" max="100" value="100"
+                            step="1"></input><span class="set-range-add"></span>
+                    </div>
+                    <div id="OFDyfz" class="set set-check">
+                        <h4 class="set-title">开启多押辅助</h4>
+                        <input type="checkbox">
+                    </div>
+                    <div id="OFFcApzsq" class="set set-check">
+                        <h4 class="set-title">开启FC/AP指示器</h4>
+                        <input type="checkbox">
+                    </div>
+                    <div id="OFAutoPlay" class="set set-check">
+                        <h4 class="set-title">开启AutoPlay</h4>
+                        <input type="checkbox">
+                    </div>
+                    <div id="uploadSettings" class="set set-upload">
+                        <h4 class="set-title">上传设置数据</h4>
+                        <input type="file" accept=".json" alt="浏览器不支持"></input>
+                    </div>
+                    <div id="initSettings" class="set set-button">
+                        <button type="booton">初始化设置数据</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="infos"></div>
+    <div id="effects"></div>
+    <div id="blur"></div>
+    <img id="bg" />
+</body>
+
+</html>
