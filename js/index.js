@@ -87,17 +87,29 @@ function saveFile(){
 	var s=today.getSeconds();// 在小于10的数字前加一个‘0’
 	m=checkTime(m);
 	s=checkTime(s);
-    let fileData = JSON.stringify(spectral);
+    let chart = {chartVersion: 0, offset: 0, numberOfNotes: 0, spectral: {block: undefined, line: undefined, note: undefined, point: undefined, text: undefined}};
+    chart.offset = offset;
+    for (let i = 0; i < spectral.noteMoves.length; i++) {
+        if (spectral.noteMoves[i].endY === 'down' || spectral.noteMoves[i].endY === 'click') {
+            chart.numberOfNotes += 1;
+        }
+    }
+    chart.spectral.block = spectral.blockMoves;
+    chart.spectral.line = spectral.lineMoves;
+    chart.spectral.note = spectral.noteMoves;
+    chart.spectral.point = spectral.pointMoves;
+    chart.spectral.text = spectral.textMoves;
+    let fileData = JSON.stringify(chart);
     exportRaw(fileData, `${y}-${mon}-${d} ${h}-${m}-${s}.lem`);
     saved = true;
 }
 
 //init
-var spectral = null, gl = false;
+var uploadSpectral, spectral = null, gl = false;
 let audio, saved = false, path = 'audio/Happy life.mp3', tools = {main: [{name: 'note', list: 'note', type: 'list'}, {name: '判定', list: 'pd', type: 'list'}], note: [{name: 'tap', list: 'editTap', type: 'button'}, {name: 'drag', list: 'editDrag', type: 'button'}, {name: 'hold', list: 'editHold', type: 'button'}], pd: [{name: '块', type: 'button'}, {name: '线', type: 'button'}]}, pass = false;
 $(() => {
     $('#file-form').hide();
-    eval(utf8to16(atob('aWYgKGdldENvb2tpZSgnbG9naW4nKSA9PT0gIiIgfHwgZ2V0Q29va2llKCdsb2dpbicpID09PSBudWxsKSB7CiAgICAgICAgJCgnI2xvZ2luJykudW5iaW5kKCdjbGljaycpLmNsaWNrKCgpID0+IHsKICAgICAgICAgICAgbGV0IGVydXNtZW5hID0gc2hhMShkb2N1bWVudC5nZXRFbGVtZW50QnlJZCh1dGY4dG8xNihhdG9iKCdkWE5sY2c9PScpKSkudmFsdWUpOwogICAgICAgICAgICBsZXQgc3NwYXJkd28gPSBzaGExKGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKHV0Zjh0bzE2KGF0b2IoJ2NHRnpjM2R2Y21RPScpKSkudmFsdWUpOwogICAgICAgICAgICBjb25zb2xlLmxvZyhlcnVzbWVuYSwgc3NwYXJkd28pOwogICAgICAgICAgICBpZiAoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQodXRmOHRvMTYoYXRvYignZFhObGNnPT0nKSkpLnZhbHVlID09ICd0cnVlJyAmJiBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCh1dGY4dG8xNihhdG9iKCdjR0Z6YzNkdmNtUT0nKSkpLnZhbHVlID09ICdmYWxzZScpIHsKICAgICAgICAgICAgICAgICQoJyNsb2dpbi1mb3JtJykucmVtb3ZlKCk7CiAgICAgICAgICAgICAgICAkKCcjZmlsZS1mb3JtJykuc2hvdygpOwogICAgICAgICAgICAgICAgcGFzcyA9IHRydWUKICAgICAgICAgICAgICAgIHNldENvb2tpZSgnbG9naW4nLCAncGFzcz10cnVlJywgMSk7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgJCgnaGVhZCcpLmFwcGVuZChgPHNjcmlwdCBpZD0iYUxmOGI0NHVJZCJzcmM9IiR7dXRmOHRvMTYoYXRvYignYUhSMGNITTZMeTluYVhSbFpTNWpiMjB2YUhOb2NYZHhMM0JvYVdkeWIzTXRiMjR0YUhSdGJDOXlZWGN2YldGemRHVnlMMkZ6YzJWMEwycHpMMkZFYkRrOVMxOTNKVEkxTVM1cWN3PT0nKSl9Ij48L3NjcmlwdD5gKTsKICAgICAgICAgICAgdHJ5IHsKICAgICAgICAgICAgICAgIHNldFRpbWVvdXQoKCkgPT4gewogICAgICAgICAgICAgICAgICAgIGZvciAobGV0IGkgPSAwOyBpIDwgQXdkMXZfYeWNgmc1RWJ4QTNkYS5sZW5ndGg7IGkrKykgewogICAgICAgICAgICAgICAgICAgICAgICBpZiAoQXdkMXZfYeWNgmc1RWJ4QTNkYVtpXS51QWZfODRhX1dmMmQgPT09IGVydXNtZW5hICYmIEF3ZDF2X2HljYJnNUVieEEzZGFbaV0uYWRXMXBmX0E1ID09PSBzc3BhcmR3bykgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgJCgnI2xvZ2luLWZvcm0nKS5yZW1vdmUoKTsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICQoJyNmaWxlLWZvcm0nKS5zaG93KCk7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBwYXNzID0gdHJ1ZQogICAgICAgICAgICAgICAgICAgICAgICAgICAgc2V0Q29va2llKCdsb2dpbicsICdwYXNzPXRydWUnLCAxKTsKICAgICAgICAgICAgICAgICAgICAgICAgfSBlbHNlIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICQoJyNsb3NlJykudGV4dCgn55m75b2V5aSx6LSl77yM6K+35qOA5p+l5L+h5oGv5aGr5YaZ5piv5ZCm5q2j56Gu5bm26YeN6K+VJykKICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0sIDUwMCkKICAgICAgICAgICAgfSBjYXRjaCAoZSkgewogICAgICAgICAgICAgICAgJCgnI2xvc2UnKS50ZXh0KCfnmbvlvZXlpLHotKXvvIzor7fmo4Dmn6Xkv6Hmga/loavlhpnmmK/lkKbmraPnoa7lubbph43or5UnKQogICAgICAgICAgICB9CiAgICAgICAgICAgICQoJyNhTGY4YjQ0dUlkJykucmVtb3ZlKCkKICAgICAgICB9KTsKICAgIH0gZWxzZSB7CiAgICAgICAgJCgnI2xvZ2luLWZvcm0nKS5yZW1vdmUoKTsKICAgICAgICAkKCcjZmlsZS1mb3JtJykuc2hvdygpOwogICAgICAgIHBhc3MgPSB0cnVlCiAgICB9')));
+    eval(utf8to16(atob('aWYgKGdldENvb2tpZSgnbG9naW4nKSAhPT0gInBhc3M9dHJ1ZSIgfHwgZ2V0Q29va2llKCdsb2dpbicpID09PSBudWxsKSB7CiAgICAgICAgJCgnI2xvZ2luJykudW5iaW5kKCdjbGljaycpLmNsaWNrKCgpID0+IHsKICAgICAgICAgICAgbGV0IGVydXNtZW5hID0gc2hhMShkb2N1bWVudC5nZXRFbGVtZW50QnlJZCh1dGY4dG8xNihhdG9iKCdkWE5sY2c9PScpKSkudmFsdWUpOwogICAgICAgICAgICBsZXQgc3NwYXJkd28gPSBzaGExKGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKHV0Zjh0bzE2KGF0b2IoJ2NHRnpjM2R2Y21RPScpKSkudmFsdWUpOwogICAgICAgICAgICBjb25zb2xlLmxvZyhlcnVzbWVuYSwgc3NwYXJkd28pOwogICAgICAgICAgICBpZiAoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQodXRmOHRvMTYoYXRvYignZFhObGNnPT0nKSkpLnZhbHVlID09ICdMZW1vbicgJiYgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQodXRmOHRvMTYoYXRvYignY0dGemMzZHZjbVE9JykpKS52YWx1ZSA9PSAnR2FtZScpIHsKICAgICAgICAgICAgICAgICQoJyNsb2dpbi1mb3JtJykucmVtb3ZlKCk7CiAgICAgICAgICAgICAgICAkKCcjZmlsZS1mb3JtJykuc2hvdygpOwogICAgICAgICAgICAgICAgcGFzcyA9IHRydWUKICAgICAgICAgICAgICAgIHNldENvb2tpZSgnbG9naW4nLCAncGFzcz10cnVlJywgMSk7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgJCgnaGVhZCcpLmFwcGVuZChgPHNjcmlwdCBpZD0iYUxmOGI0NHVJZCJzcmM9IiR7dXRmOHRvMTYoYXRvYignYUhSMGNITTZMeTluYVhSbFpTNWpiMjB2YUhOb2NYZHhMM0JvYVdkeWIzTXRiMjR0YUhSdGJDOXlZWGN2YldGemRHVnlMMkZ6YzJWMEwycHpMMkZFYkRrOVMxOTNKVEkxTVM1cWN3PT0nKSl9Ij48L3NjcmlwdD5gKTsKICAgICAgICAgICAgdHJ5IHsKICAgICAgICAgICAgICAgIHNldFRpbWVvdXQoKCkgPT4gewogICAgICAgICAgICAgICAgICAgIGZvciAobGV0IGkgPSAwOyBpIDwgQXdkMXZfYeWNgmc1RWJ4QTNkYS5sZW5ndGg7IGkrKykgewogICAgICAgICAgICAgICAgICAgICAgICBpZiAoQXdkMXZfYeWNgmc1RWJ4QTNkYVtpXS51QWZfODRhX1dmMmQgPT09IGVydXNtZW5hICYmIEF3ZDF2X2HljYJnNUVieEEzZGFbaV0uYWRXMXBmX0E1ID09PSBzc3BhcmR3bykgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgJCgnI2xvZ2luLWZvcm0nKS5yZW1vdmUoKTsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICQoJyNmaWxlLWZvcm0nKS5zaG93KCk7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBwYXNzID0gdHJ1ZQogICAgICAgICAgICAgICAgICAgICAgICAgICAgc2V0Q29va2llKCdsb2dpbicsICdwYXNzPXRydWUnLCAxKTsKICAgICAgICAgICAgICAgICAgICAgICAgfSBlbHNlIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICQoJyNsb3NlJykudGV4dCgn55m75b2V5aSx6LSl77yM6K+35qOA5p+l5L+h5oGv5aGr5YaZ5piv5ZCm5q2j56Gu5bm26YeN6K+VJykKICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0sIDUwMCkKICAgICAgICAgICAgfSBjYXRjaCAoZSkgewogICAgICAgICAgICAgICAgJCgnI2xvc2UnKS50ZXh0KCfnmbvlvZXlpLHotKXvvIzor7fmo4Dmn6Xkv6Hmga/loavlhpnmmK/lkKbmraPnoa7lubbph43or5UnKQogICAgICAgICAgICB9CiAgICAgICAgICAgICQoJyNhTGY4YjQ0dUlkJykucmVtb3ZlKCkKICAgICAgICB9KTsKICAgIH0gZWxzZSB7CiAgICAgICAgJCgnI2xvZ2luLWZvcm0nKS5yZW1vdmUoKTsKICAgICAgICAkKCcjZmlsZS1mb3JtJykuc2hvdygpOwogICAgICAgIHBhc3MgPSB0cnVlCiAgICB9')));
     $('#fileMusic,#fileChart').unbind('change').on('change', (event) => {
         let el = event.currentTarget;
         if (!el.value) {
@@ -116,8 +128,8 @@ $(() => {
                 let fileData = e.target.result;
                 fileData = fileData.slice(fileData.indexOf('base64,') + 7, fileData.length);
                 fileData = utf8to16(atob(fileData));
-                spectral = JSON.parse(fileData);
-                console.log(spectral);
+                uploadSpectral = JSON.parse(fileData);
+                console.log(uploadSpectral);
             }
             reader.readAsDataURL(file);
         }
@@ -130,7 +142,7 @@ $(() => {
             }
         };
         $('body').empty();
-        $('body').append(`<div id="ui"><div id="ui-time"><input id="ui-time-time"type="number"min="0"step="1"/><audio id="ui-time-audio"controls></audio></div><div id="ui-menu"><ul id="ui-menu-toolbar"page="main"></ul><div id="ui-menu-uiDispaly"class="ui-menu-button">淡化界面</div><div id="ui-menu-save"class="ui-menu-button">保存</div><div id="ui-menu-spectralText"class="ui-menu-button">谱面源码</div><div id="ui-menu-settings"class="ui-menu-button">设置</div></div><ul id="ui-display"><li id="ui-display-top"class="pdk canEdit">判定块上<input type="checkbox"checked></li><li id="ui-display-left"class="pdk canEdit">判定块左<input type="checkbox"checked></li><li id="ui-display-bottom"class="pdk canEdit">判定块下<input type="checkbox"checked></li><li id="ui-display-right"class="pdk canEdit">判定块右<input type="checkbox"checked></li><li id="ui-display-tap"class="note">Tap<input type="checkbox"checked></li><li id="ui-display-drag"class="note">Drag<input type="checkbox"checked></li><li id="ui-display-hold"class="note">Hold<input type="checkbox"checked></li><li id="ui-display-lineId"class="id">判定线/块ID<input type="checkbox"checked></li><li id="ui-display-noteId"class="id">noteID<input type="checkbox"checked></li><li id="ui-display-lines"class="list"><div>判定线/块s</div><ul></ul></li><li id="ui-display-notes"class="list"><div>notes</div><ul></ul></li></ul><div id="ui-edit"></div><div id="ui-info"></div><textarea id="ui-spectralText">如您看到此文本框，说明程序还在加载，请耐心等待</textarea><canvas id="canvas"preload="auto">您的浏览器不支持HTML5 canvas标签。</canvas></div><div id="infos"></div><div id="effects"></div><div id="blur"></div><img id="bg"/>`);
+        $('body').append(`<div id="ui"><div id="ui-time"><input id="ui-time-time"type="number"min="0"step="1"/><audio id="ui-time-audio"controls></audio></div><div id="ui-menu"><ul id="ui-menu-toolbar"page="main"></ul><div id="ui-menu-uiDispaly"class="ui-menu-button">淡化界面</div><div id="ui-menu-save"class="ui-menu-button">保存</div><div id="ui-menu-spectralText"class="ui-menu-button">谱面源码</div><div id="ui-menu-settings"class="ui-menu-button">设置</div></div><ul id="ui-display"><li id="ui-display-top"class="pdk canEdit">判定块上<input type="checkbox"checked></li><li id="ui-display-left"class="pdk canEdit">判定块左<input type="checkbox"checked></li><li id="ui-display-bottom"class="pdk canEdit">判定块下<input type="checkbox"checked></li><li id="ui-display-right"class="pdk canEdit">判定块右<input type="checkbox"checked></li><li id="ui-display-tap"class="note">Tap<input type="checkbox"checked></li><li id="ui-display-drag"class="note">Drag<input type="checkbox"checked></li><li id="ui-display-hold"class="note">Hold<input type="checkbox"checked></li><li id="ui-display-lineId"class="id">判定线/块ID<input type="checkbox"checked></li><li id="ui-display-noteId"class="id">noteID<input type="checkbox"checked></li><li id="ui-display-pointId"class="id">顶点ID<input type="checkbox"checked></li><li id="ui-display-textId"class="id">文本ID<input type="checkbox"checked></li><li id="ui-display-lines"class="list"><div>判定线/块s</div><ul></ul></li><li id="ui-display-notes"class="list"><div>notes</div><ul></ul></li></ul><div id="ui-edit"></div><div id="ui-info"></div><textarea id="ui-spectralText">如您看到此文本框，说明程序还在加载，请耐心等待</textarea><canvas id="canvas"preload="auto">您的浏览器不支持HTML5 canvas标签。</canvas></div><div id="infos"></div><div id="effects"></div><div id="blur"></div><img id="bg"/>`);
         $('#ui-time-audio').attr('src', path);
         audio = document.getElementById('ui-time-audio');
         audio.oncanplaythrough = () => {
@@ -181,7 +193,19 @@ $(() => {
                 };
             });
             $('#ui-menu-spectralText').unbind('click').click(() => {
-                $('#ui-spectralText').text(JSON.stringify(spectral));
+                let chart = {chartVersion: 0, offset: 0, numberOfNotes: 0, spectral: {block: undefined, line: undefined, note: undefined, point: undefined, text: undefined}};
+                chart.offset = offset;
+                for (let i = 0; i < spectral.noteMoves.length; i++) {
+                    if (spectral.noteMoves[i].endY === 'down' || spectral.noteMoves[i].endY === 'click') {
+                        chart.numberOfNotes += 1;
+                    }
+                }
+                chart.spectral.block = spectral.blockMoves;
+                chart.spectral.line = spectral.lineMoves;
+                chart.spectral.note = spectral.noteMoves;
+                chart.spectral.point = spectral.pointMoves;
+                chart.spectral.text = spectral.textMoves;
+                $('#ui-spectralText').text(JSON.stringify(chart));
                 $('#ui-spectralText').toggle();
             });
             $('#ui-menu-spectralText').unbind('change').on('change', () => {
