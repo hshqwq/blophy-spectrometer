@@ -10,19 +10,9 @@
     z-index: -4;
 }
 #canvas{
-    position: absolute;
-
-    /* 居中 */
-    top: 45%;
-    left: 45%;
-    transform: translate(-50%, -50%);
-
-    /* 自动处理缩放，保证中心画面在中心显示 */
-	object-fit: cover;
-
-    background-color: #00000022;
+    background-color: #00000055;
     background-size: cover;
     border: none;
-    z-index: -2;
+    z-index: 1;
     box-shadow: 0 0 30px #fff;
 }

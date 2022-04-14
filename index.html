@@ -3,27 +3,32 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Blophy 制谱器 (demo)</title>
+    <title>Blophy 制谱器(审核专用版)</title>
     <link rel="shortcut icon" href="img/icon/icon.jpg"/>
     <link rel="stylesheet" href="css/index.css"/>
     <link rel="stylesheet" href="css/game.css"/>
+    <!-- <link rel="stylesheet" href="css/login.css"/> -->
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.bootcss.com/js-sha1/0.6.0/sha1.js"></script>
     <script type="text/javascript" src="js/general.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </head>
 <body>
+    <ul id="infoList"></ul>
+    <div id="title">登录</div>
     <div id="login-form">
         <div>
-            <span>用户名: </span>
-            <input type="text" id="user"/>
+            <div>
+                <span>用户名: </span>
+                <input type="text" id="user"/>
+            </div>
+            <div>
+                <span>密码: </span>
+                <input type="password" id="password"/>
+            </div>
+            <p id="lose"></p>
+            <span id="login">登录</span>
         </div>
-        <div>
-            <span>密码: </span>
-            <input type="password" id="password"/>
-        </div>
-        <div id="lose"></div>
-        <span id="login">登录</span>
     </div>
     <div id="file-form">
         <div>
@@ -36,47 +41,125 @@
         </div>
         <span id="start" style="display: none">开始制谱</span>
     </div>
-    <style>
-        body {
-            background-color: beige;
+    <style>body {
+        color: white;
+        background-color: black;
+    }
+    #lose{
+        color: red;
+    }
+    #login-form{
+        position: fixed;
+        top: 50%;
+        right: 0;
+        width: 70vh;
+        height: 70vh;
+        transform: translate(20%, -50%) rotate(45deg);
+        padding: 42.5vh 42.5vh 12.5vh 12.5vh;
+        border: 4px solid white;
+        color: white;
+        overflow: hidden;
+        animation: rectInto 4s;
+    }
+    @keyframes rectInto {
+        0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) rotate(-360deg);
+            padding: 100vh;
         }
-        #lose{
-            color: red;
+        70% {
+            opacity: 1;
+            transform: translate(-20%, -50%) rotate(75deg);
+            padding: 10vh;
         }
-        #login-form, #file-form{
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 30%;
-            transform: translate(-50%, -50%);
-            background-color:white;
-            padding: 5rem;
-            border-radius: .5rem;
-            text-align: center;
-            box-shadow: 0 0 20px #00000066;
+        100% {
+            transform: translate(20%, -50%) rotate(45deg);
+            padding: 42.5vh 42.5vh 12.5vh 12.5vh;
         }
-        #login-form>div,#file-form>div{
-            display: flex;
-            width: 100%;
-            padding: 1rem 0;
-            justify-content: space-between;
+    }
+    #login-form>div{
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%) rotate(-45deg);
+        opacity: 0;
+        animation: textInto 1.5s 4s;
+        animation-fill-mode: forwards;
+    }
+    @keyframes textInto {
+        from{
+            opacity: 0;
         }
-        #login-form>div>input,#file-form>div>input{
-            width: 80%;
-            border: none;
-            border-bottom: 3px solid gainsboro;
+        to{
+            opacity: 1;
         }
-        #login-form>div>input:focus{
-            border-bottom: 3px solid dodgerblue;
+    }
+    #title{
+        color: white;
+        display: block;
+        position: fixed;
+        opacity: 0;
+        top: .25rem;
+        left: .5rem;
+        font-size: 5rem;
+        animation: textInto 1.5s 2.5s;
+        animation-fill-mode: forwards;
+        pointer-events: none;
+    }
+    /*#login-form, #file-form{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 30%;
+        transform: translate(-50%, -50%);
+        background-color:white;
+        padding: 5rem;
+        border-radius: .5rem;
+        text-align: center;
+        box-shadow: 0 0 20px #00000066;
+    }*/
+    #login-form>div>div{
+        border-left: 4px solid white;
+        display: flex;
+        width: 0;
+        height: 1.75rem;
+        margin-bottom: .75rem;
+        font-size: 0;
+        background-image: linear-gradient(to right, #ffffff88, #ffffff00);
+        padding: 1rem .25rem;
+        justify-content: space-between;
+        animation: formUnfold 2s 5s;
+        animation-fill-mode: forwards;
+    }
+    @keyframes formUnfold {
+        from{
+            width: 0;
+            font-size: 0;
         }
-        #login,#start{
-            padding: .5rem;
-            border: 2px solid gainsboro;
-            border-radius: 5px;
+        to{
+            width: 120%;
+            font-size: 1rem;
         }
-        #login:hover,#start:hover{
-            border: 2px solid dodgerblue;
-        }
-    </style>
+    }
+    #login-form>div>div>input,#file-form>div>div>input{
+        width: 80%;
+        border: none;
+        border-bottom: 3px solid white;
+        background-color: #ffffff00;
+    }
+    #login-form>div>div>input:focus{
+        border-bottom: 3px solid dodgerblue;
+    }
+    #login,#start{
+        background-image: linear-gradient(to right, #ffffff88, #ffffff00);
+        padding: .5rem;
+        border-left: 4px solid white;
+    }
+    #login:hover,#start:hover{
+        border-color: dodgerblue;
+    }
+    #file-form{
+        position: absolute;
+        top:20%;
+    }</style>
 </body>
 </html>

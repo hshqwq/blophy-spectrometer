@@ -1,0 +1,114 @@
+body {
+    background-color: black;
+}
+#lose{
+    color: red;
+}
+#login-form{
+    position: fixed;
+    top: 50%;
+    right: 0;
+    width: 70vh;
+    height: 70vh;
+    transform: translate(20%, -50%) rotate(45deg);
+    padding: 42.5vh 42.5vh 12.5vh 12.5vh;
+    border: 4px solid white;
+    color: white;
+    overflow: hidden;
+    animation: rectInto 4s;
+}
+@keyframes rectInto {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(-360deg);
+        padding: 100vh;
+    }
+    70% {
+        opacity: 1;
+        transform: translate(-20%, -50%) rotate(75deg);
+        padding: 10vh;
+    }
+    100% {
+        transform: translate(20%, -50%) rotate(45deg);
+        padding: 42.5vh 42.5vh 12.5vh 12.5vh;
+    }
+}
+#login-form>div{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
+    opacity: 0;
+    animation: textInto 1.5s 4s;
+    animation-fill-mode: forwards;
+}
+@keyframes textInto {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+#title{
+    color: white;
+    display: block;
+    position: fixed;
+    opacity: 0;
+    top: .25rem;
+    left: .5rem;
+    font-size: 5rem;
+    animation: textInto 1.5s 2.5s;
+    animation-fill-mode: forwards;
+}
+/*#login-form, #file-form{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 30%;
+    transform: translate(-50%, -50%);
+    background-color:white;
+    padding: 5rem;
+    border-radius: .5rem;
+    text-align: center;
+    box-shadow: 0 0 20px #00000066;
+}*/
+#login-form>div>div{
+    border-left: 4px solid white;
+    display: flex;
+    width: 0;
+    height: 1.75rem;
+    margin-bottom: .75rem;
+    font-size: 0;
+    background-image: linear-gradient(to right, #ffffff88, #ffffff00);
+    padding: 1rem .25rem;
+    justify-content: space-between;
+    animation: formUnfold 2s 5s;
+    animation-fill-mode: forwards;
+}
+@keyframes formUnfold {
+    from{
+        width: 0;
+        font-size: 0;
+    }
+    to{
+        width: 120%;
+        font-size: 1rem;
+    }
+}
+#login-form>div>div>input,#file-form>div>div>input{
+    width: 80%;
+    border: none;
+    border-bottom: 3px solid white;
+    background-color: #ffffff00;
+}
+#login-form>div>div>input:focus{
+    border-bottom: 3px solid dodgerblue;
+}
+#login,#start{
+    background-image: linear-gradient(to right, #ffffff88, #ffffff00);
+    padding: .5rem;
+    border-left: 4px solid white;
+}
+#login:hover,#start:hover{
+    border-color: dodgerblue;
+}

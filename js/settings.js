@@ -4,7 +4,7 @@ let settings;
 var lS = window.localStorage;
 const DATAVERSION = 0.2, VERSION = '1.0.0 dev';
     if(! window.localStorage){
-        // 警告用户当前浏览器（模式）不支持存储
+        // 警告用户当前浏览器(模式)不支持存储
         info("浏览器不支持存储", 'error');
     }else{
         if (lS['settings'] === undefined) { //如果没存储过设置则初始化存储设置
@@ -72,7 +72,7 @@ const DATAVERSION = 0.2, VERSION = '1.0.0 dev';
                 info('未选择文件', 'error');
                 return;
             }
-            info('请确保文件数据正确性，以免发生错误', 'warning');
+            info('请确保文件数据正确性,以免发生错误', 'warning');
             info('如果出现错误请初始化数据', 'warning');
             let file = element.files[0];
             var reader = new FileReader();

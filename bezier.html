@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta chars="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="author" content="Yomli" />
+    <meta name="keywords" content="blophy,Blphy" />
+    <!-- 控制网页帧率,建议关闭 -->
+    <!-- <meta http-equiv="refresh" content="60"/> -->
+    <!-- 设定默认文件加载位置为gitee,以加快资源加载,开发时请视情况关闭/开启(请自行解决跨域问题) -->
+    <!-- <base href="https://www.gitee.com/hshqwq/phigros-on-html/raw/master/"> -->
+    <title>Blophy settings</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="js/general.js"></script>
+    <script type="text/javascript" src="js/bezier.js"></script>
+    <style>
+        div{
+            color: black;
+        }
+    </style>
+</head>
+
+<body style="margin: 16px;width: 100%;background-color: white;">
+    <canvas id="bezierCanvas" width="256" height="256" style="background-color: black;">您的浏览器不支持HTML5 canvas标签.</canvas>
+    <div>
+        x1:
+        <input class="cs" type="number" name="" id="x1" step="0.01" value="0.4" min="0" max="1">
+    </div>
+    <div>
+        y1:
+        <input class="cs" type="number" name="" id="y1" step="0.01" value="0.1">
+    </div>
+    <div>
+        x2:
+        <input class="cs" type="number" name="" id="x2" step="0.01" value="0.6" min="0" max="1">
+    </div>
+    <div>
+        y2:
+        <input class="cs" type="number" name="" id="y2" step="0.01" value="0.9">
+    </div>
+</body>
+
+</html>
