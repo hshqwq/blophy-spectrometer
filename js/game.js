@@ -77,50 +77,51 @@ function gaming() {
             info: {title: 'unknown', author: 'unknown', chartAuthor: 'unknown', diffcultly: {type: 'UK', level: '.?'},},    
             blocks: [],
             blockMoves: [
-                {block: 0, x: 0, y: 0, eulerAngle: 360, endEulerAngle: 0, color: {r: 255, g: 0, b: 255}, endColor: {r: 0, g: 255, b: 0}, alpha: 0, endAlpha: 1, bezier: {x1: 0.75, y1: 1, x2: 0.75, y2: 1}, startTime: 0, width: 30, endWidth: 15, endTime: 800},
-                {block: 0, endY: 3, eulerAngle: 0, endEulerAngle: -180, endX: 12, endWidth: 15, startTime: 800, endTime: 1600},
-                {block: 0, endY: 0, endEulerAngle: -90, endX: 0, endWidth: 15, startTime: 1600, endTime: 1800},
-                {block: 0, endY: 0, endEulerAngle: 0, endX: 0, endWidth: 15, startTime: 1800, endTime: 1850},
-                {block: 0, endColor: {r: 255, g: 255, b: 0}, startTime: 1850, endTime: 1850},
-                {block: 0, endEulerAngle: 360, endAlpha: 0, startTime: 1900, endWidth: 50, endTime: 2700},
-                {block: 1, x: 0, y: 0, eulerAngle: 360, endEulerAngle: 0, color: {r: 255, g: 0, b: 255}, endColor: {r: 0, g: 255, b: 0}, alpha: 0, endAlpha: 1, bezier: {x1: 0.75, y1: 1, x2: 0.75, y2: 1}, startTime: 50, width: 30, endWidth: 15, endTime: 850},
-                // {x: 0, y: 0, eulerAngle: 0, endEulerAngle: 0, color: {r: 255, g: 255, b: 255}, endColor: {r: 255, g: 255, b: 255}, alpha: 0, endAlpha: 1, bezier: {x1: 0.75, y1: 1, x2: 0.75, y2: 1}, width: 15, endWidth: 15, startTime: 0, endTime: 0}
+                // {block: 0, x: 0, y: 0, eulerAngle: 360, endEulerAngle: 0, color: {r: 255, g: 0, b: 255}, endColor: {r: 0, g: 255, b: 0}, alpha: 0, endAlpha: 1, bezier: {x1: 0.75, y1: 1, x2: 0.75, y2: 1}, startTime: 0, width: 30, endWidth: 15, endTime: 800},
+                // {block: 0, endY: 3, eulerAngle: 0, endEulerAngle: -180, endX: 12, endWidth: 15, startTime: 800, endTime: 1600},
+                // {block: 0, endY: 0, endEulerAngle: -90, endX: 0, endWidth: 15, startTime: 1600, endTime: 1800},
+                // {block: 0, endY: 0, endEulerAngle: 0, endX: 0, endWidth: 15, startTime: 1800, endTime: 1850},
+                // {block: 0, endColor: {r: 255, g: 255, b: 0}, startTime: 1850, endTime: 1850},
+                // {block: 0, endEulerAngle: 360, endAlpha: 0, startTime: 1900, endWidth: 50, endTime: 2700},
+                // {block: 1, x: 0, y: 0, eulerAngle: 360, endEulerAngle: 0, color: {r: 255, g: 0, b: 255}, endColor: {r: 0, g: 255, b: 0}, alpha: 0, endAlpha: 1, bezier: {x1: 0.75, y1: 1, x2: 0.75, y2: 1}, startTime: 50, width: 30, endWidth: 15, endTime: 850},
+
+                {block: 0, x: 0, y: 0, eulerAngle: 0, endEulerAngle: 0, color: {r: 255, g: 255, b: 255}, endColor: {r: 255, g: 255, b: 255}, alpha: 0, endAlpha: 1, width: 15, endWidth: 15, startTime: 0, endTime: 0}
             ],
             lines: [],
             lineMoves: [
-                {line: 4, y: -6, endY: 6, bezier: {x1: 0, y1: 0, x2: 0, y2: 1}, startTime: 0, endTime: 500},
-                {line: 4, color: {r: 255, g: 0, b: 0}, endColor: {r: 0, g: 255, b: 255}, bezier: {x1: 1, y1: 0, x2: 0, y2: 1}, startTime: 0, endTime: 500}
+                // {line: 4, y: -6, endY: 6, bezier: {x1: 0, y1: 0, x2: 0, y2: 1}, startTime: 0, endTime: 500},
+                // {line: 4, color: {r: 255, g: 0, b: 0}, endColor: {r: 0, g: 255, b: 255}, bezier: {x1: 1, y1: 0, x2: 0, y2: 1}, startTime: 0, endTime: 500}
             ],
             notes: [],
             noteMoves: [
-                {line: 0, note: 0, x: 0, y: 20, endX: 0, endY: 5, startTime: 1200, endTime: 1350},
-                {line: 1, note: 1, x: -5, y: 20, endX: 5, endY: 'down', startTime: 1300, endTime: 1450},
-                {line: 0, note: 2, x: -5, y: 20, endX: 5, endY: 'down', type: 'drag', startTime: 1700, endTime: 1800},
-                {line: 1, note: 3, x: -5, y: 20, endX: 5, endY: 'down', type: 'hold', height: 150, endHeight: 100, startTime: 1650, endTime: 1750},
-                {line: 0, note: 4, x: -5, y: 20, endX: 5, endY: 'down', type: 'eTap', startTime: 1600, endTime: 1700},
-                {line: 3, note: 5, x: 0, y: 20, endX: 0, endY: 'down', startTime: 1200, endTime: 1400},
-                {line: 2, note: 6, x: 0, y: 20, endX: 0, endY: 'down', startTime: 1300, endTime: 1450},
-                {line: 2, note: 7, x: 0, y: 20, endX: 0, endY: 'down', startTime: 1600, endTime: 1700},
-                {line: 4, note: 8, x: 0, y: 20, endX: 0, endY: 'down',bezier: {x1: 0, y1: 0, x2: 0, y2: 0.5} , startTime: 800, endTime: 1000},
-                {line: 4, note: 9, x: 0, y: 0, endX: -15, endY: 0, startTime: 0, endTime: 100},
+                // {line: 0, note: 0, x: 0, y: 20, endX: 0, endY: 5, startTime: 1200, endTime: 1350},
+                // {line: 1, note: 1, x: -5, y: 20, endX: 5, endY: 'down', startTime: 1300, endTime: 1450},
+                // {line: 0, note: 2, x: -5, y: 20, endX: 5, endY: 'down', type: 'drag', startTime: 1700, endTime: 1800},
+                // {line: 1, note: 3, x: -5, y: 20, endX: 5, endY: 'down', type: 'hold', height: 150, endHeight: 100, startTime: 1650, endTime: 1750},
+                // {line: 0, note: 4, x: -5, y: 20, endX: 5, endY: 'down', type: 'eTap', startTime: 1600, endTime: 1700},
+                // {line: 3, note: 5, x: 0, y: 20, endX: 0, endY: 'down', startTime: 1200, endTime: 1400},
+                // {line: 2, note: 6, x: 0, y: 20, endX: 0, endY: 'down', startTime: 1300, endTime: 1450},
+                // {line: 2, note: 7, x: 0, y: 20, endX: 0, endY: 'down', startTime: 1600, endTime: 1700},
+                // {line: 4, note: 8, x: 0, y: 20, endX: 0, endY: 'down',bezier: {x1: 0, y1: 0, x2: 0, y2: 0.5} , startTime: 800, endTime: 1000},
+                // {line: 4, note: 9, x: 0, y: 0, endX: -15, endY: 0, startTime: 0, endTime: 100},
             ],
             graphics: [],
             pointMoves: [
-                {graph: 0, point: 0, x: 0, endX: 10, startTime: 0, endTime: 600},
-                {graph: 0, point: 1, x: 0, endX: -10, startTime: 0, endTime: 600},
-                {graph: 0, point: 2, y: 0, endY: -10, bezier: {x1: 0.5, y1: 0.2, x2: 0, y2: 1.3}, startTime: 0, endTime: 600},
-                {graph: 0, point: 3, y: 0, endY: 10, bezier: {x1: 0.5, y1: 0.2, x2: 0, y2: 1.3}, startTime: 600, endTime: 800},
-                {graph: 0, point: 3, color: {r: 255, g: 255, b: 255}, endColor: {r: 60, g: 50, b: 100}, startTime: 600, endTime: 800},
-                {graph: 1, point: 0, y: 0, endY: -6, x: 0, endX: 4, bezier: {x1: 0.5, y1: 0.2, x2: 0, y2: 1.3}, startTime: 0, endTime: 600},
-                {graph: 1, point: 1, y: 0, endY: 3, bezier: {x1: 0, y1: 0.2, x2: 0, y2: 1.3}, startTime: 0, endTime: 600},
-                {graph: 1, point: 2, y: 0, endY: 3, bezier: {x1: 0, y1: 0.2, x2: 0, y2: 1.3}, startTime: 0, endTime: 600},
-                {graph: 1, point: 3, x: 0, endX: -6, y: 0, endY: 4, color: {r: 255, g: 255, b: 255}, endColor: {r: 60, g: 200, b: 250}, close: false, startTime: 0, endTime: 600},
-                {graph: 1, point: 2, endY: -1, bezier: {x1: 0, y1: 0, x2: 0.5, y2: 0.75}, startTime: 500, endTime: 1000},
+                // {graph: 0, point: 0, x: 0, endX: 10, startTime: 0, endTime: 600},
+                // {graph: 0, point: 1, x: 0, endX: -10, startTime: 0, endTime: 600},
+                // {graph: 0, point: 2, y: 0, endY: -10, bezier: {x1: 0.5, y1: 0.2, x2: 0, y2: 1.3}, startTime: 0, endTime: 600},
+                // {graph: 0, point: 3, y: 0, endY: 10, bezier: {x1: 0.5, y1: 0.2, x2: 0, y2: 1.3}, startTime: 600, endTime: 800},
+                // {graph: 0, point: 3, color: {r: 255, g: 255, b: 255}, endColor: {r: 60, g: 50, b: 100}, startTime: 600, endTime: 800},
+                // {graph: 1, point: 0, y: 0, endY: -6, x: 0, endX: 4, bezier: {x1: 0.5, y1: 0.2, x2: 0, y2: 1.3}, startTime: 0, endTime: 600},
+                // {graph: 1, point: 1, y: 0, endY: 3, bezier: {x1: 0, y1: 0.2, x2: 0, y2: 1.3}, startTime: 0, endTime: 600},
+                // {graph: 1, point: 2, y: 0, endY: 3, bezier: {x1: 0, y1: 0.2, x2: 0, y2: 1.3}, startTime: 0, endTime: 600},
+                // {graph: 1, point: 3, x: 0, endX: -6, y: 0, endY: 4, color: {r: 255, g: 255, b: 255}, endColor: {r: 60, g: 200, b: 250}, close: false, startTime: 0, endTime: 600},
+                // {graph: 1, point: 2, endY: -1, bezier: {x1: 0, y1: 0, x2: 0.5, y2: 0.75}, startTime: 500, endTime: 1000},
             ],
             texts: [],
             textMoves: [
-                {textId: 0, alpha: 0, endAlpha: 1, text: 'Hello World!', font: '42px Phigros, Phigros cn, Tw Cen MT', startTime: 0, endTime: 200},
-                {textId: 0, x: 0, endX: -12, eulerAngle: 0, endEulerAngle: 25, color: {r: 255, g: 255, b: 255}, endColor: {r: 255, g: 200, b: 200}, text: 'Hello World', font: '90px Phigros, Phigros cn, Tw Cen MT', bezier: {x1: 0, y1: 0, x2: 0.5, y2: 0.75}, startTime: 200, endTime: 400}
+                // {textId: 0, alpha: 0, endAlpha: 1, text: 'Hello World!', font: '42px Phigros, Phigros cn, Tw Cen MT', startTime: 0, endTime: 200},
+                // {textId: 0, x: 0, endX: -12, eulerAngle: 0, endEulerAngle: 25, color: {r: 255, g: 255, b: 255}, endColor: {r: 255, g: 200, b: 200}, text: 'Hello World', font: '90px Phigros, Phigros cn, Tw Cen MT', bezier: {x1: 0, y1: 0, x2: 0.5, y2: 0.75}, startTime: 200, endTime: 400}
             ]
         }
     } else {
