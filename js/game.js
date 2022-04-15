@@ -29,6 +29,7 @@ function lineEdit(id = 0) {
 }
 
 function cancelLineEdit() {
+    edit.open = false;
     gl = false;
     editLine = undefined;
 }
@@ -118,7 +119,7 @@ function gaming() {
             ],
             texts: [],
             textMoves: [
-                {textId: 0, alpha: 0, endAlpha: 1, text: 'Hello World!', font: '100px Phigros, Phigros cn, Tw Cen MT', startTime: 0, endTime: 200},
+                {textId: 0, alpha: 0, endAlpha: 1, text: 'Hello World!', font: '42px Phigros, Phigros cn, Tw Cen MT', startTime: 0, endTime: 200},
                 {textId: 0, x: 0, endX: -12, eulerAngle: 0, endEulerAngle: 25, color: {r: 255, g: 255, b: 255}, endColor: {r: 255, g: 200, b: 200}, text: 'Hello World', font: '90px Phigros, Phigros cn, Tw Cen MT', bezier: {x1: 0, y1: 0, x2: 0.5, y2: 0.75}, startTime: 200, endTime: 400}
             ]
         }
@@ -143,18 +144,18 @@ function gaming() {
             offset = settings.pmyc;
         }
         // init canvas
-        cvs.width = 3000;
-        cvs.height = 2250;
+        cvs.width = 1920;
+        cvs.height = 1080;
         if (settings.listProportion == '16:9' || settings.proportion == undefined) {
             $('#canvas').css('width', $('body').height() * 0.9 / 9 * 16);
         } else {
             $('#canvas').css('width', $('body').height() * 0.9 / 3 * 4);
         }
         ctx = cvs.getContext('2d');
-        ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2, 1125);
+        ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2, 540);
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
-        ctx.font = '100px Phigros, Phigros cn, Tw Cen MT';
+        ctx.font = '42px Phigros, Phigros cn, Tw Cen MT';
         ctx.save();
     }
     // init UI
@@ -231,7 +232,7 @@ function gaming() {
                 spectral.blocks.push(new block(spectral.lines.length - 4, x, y, eulerAngle, width, alpha, color));
             }
             class line {
-                constructor(x = 0, y = 0, eulerAngle = 0, width = 10000, alpha = 1, color = {r: 255, g: 255, b: 255}) {
+                constructor(x = 0, y = 0, eulerAngle = 0, width = 800, alpha = 1, color = {r: 255, g: 255, b: 255}) {
                     this.x = x;
                     this.y = y;
                     this.eulerAngle = eulerAngle;
@@ -243,17 +244,17 @@ function gaming() {
                     ctx.fillStyle = `rgb(${this.color.r}, ${this.color.g}, ${this.color.b})`;
                     ctx.strokeStyle = `rgb(${this.color.r}, ${this.color.g}, ${this.color.b})`;
                     if (gl) {
-                        ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2, 8900);
+                        ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2, 3256);
                     } else {
-                        ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2 + this.x * 100, 1125 + this.y * 100);
+                        ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2 + this.x * 42, 540 + this.y * 42);
                         ctx.rotate(this.eulerAngle * Math.PI / 180);
                         ctx.globalAlpha = this.alpha;
                     }
-                    ctx.fillRect(0 - this.width * 50, -4, this.width * 100, 8);
+                    ctx.fillRect(0 - this.width * 21, -2, this.width * 42, 4);
                     if (display.lineId) {
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'bottom';
-                        ctx.font = '100px Phigros, Phigros cn, Tw Cen MT';
+                        ctx.font = '42px Phigros, Phigros cn, Tw Cen MT';
                         ctx.globalAlpha = 1;
                         ctx.fillText(String(id), 0, 0);
                     }
@@ -348,7 +349,7 @@ function gaming() {
                 }
             }
             class note {
-                constructor(line = 0, x = 0, y = 5000, type = 'tap', trueNote = false, height = 3) {
+                constructor(line = 0, x = 0, y = 1100, type = 'tap', trueNote = false, height = 3) {
                     this.line = line;
                     this.x = x;
                     this.y = y;
@@ -378,35 +379,35 @@ function gaming() {
                         }
                         if (gl) {
                             if (this.line == editLine) {
-                                ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2, 8900);
+                                ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2, 3258);
                                 ctx.globalAlpha = 1;
                                 if (this.type == 'hold') {
-                                    ctx.drawImage(noteImg, this.x * 100 - 200, 0 - (this.y * 100 + this.height * 100), 400, this.height * 100);
+                                    ctx.drawImage(noteImg, this.x * 42 - 84, 0 - (this.y * 42 + this.height * 42 - 42), 168, this.height * 42);
                                 } else {
-                                    ctx.drawImage(noteImg, this.x * 100 - 200, 0 - (this.y * 100 + 95), 400, 100);
+                                    ctx.drawImage(noteImg, this.x * 42 - 84, 0 - (this.y * 42 + 95 - 42), 168, 42);
                                 }
                                 if (display.noteId) {
                                     ctx.globalAlpha = 1;
-                                    ctx.fillText(id, this.x * 100, 0 - (this.y * 100 + 100));
+                                    ctx.fillText(id, this.x * 42, 0 - (this.y * 42 + 42));
                                 }
                                 ctx.restore();
                             }
                         } else {
-                            ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2 + spectral.lines[this.line].x * 100, 1125 + spectral.lines[this.line].y * 100);
+                            ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2 + spectral.lines[this.line].x * 42, 540 + spectral.lines[this.line].y * 42);
                             ctx.rotate(spectral.lines[this.line].eulerAngle * Math.PI / 180);
                             ctx.globalAlpha = 1;
                             if (this.type == 'hold') {
-                                ctx.drawImage(noteImg, this.x * 100 - 200, 0 - (this.y * 100 + this.height * 100), 400, this.height * 100);
+                                ctx.drawImage(noteImg, this.x * 42 - 84, 0 - (this.y * 42 + this.height * 42), 168, this.height * 42);
                             } else {
-                                ctx.drawImage(noteImg, this.x * 100 - 200, 0 - (this.y * 100 + 95), 400, 100);
+                                ctx.drawImage(noteImg, this.x * 42 - 84, 0 - (this.y * 42 + 40), 168, 42);
                             }
                             if (display.noteId) {
                                 ctx.textAlign = 'center';
                                 ctx.textBaseline = 'bottom';
-                                ctx.font = '100px Phigros, Phigros cn, Tw Cen MT';
+                                ctx.font = '42px Phigros, Phigros cn, Tw Cen MT';
                                 ctx.globalAlpha = 1;
                                 ctx.fillStyle = '#ffffff';
-                                ctx.fillText(id, this.x * 100, 0 - (this.y * 100 + 25));
+                                ctx.fillText(id, this.x * 42, 0 - (this.y * 42 + 25));
                             }
                             ctx.restore();
                         }
@@ -622,14 +623,14 @@ function gaming() {
                     this.close = close;
                 }
                 draw(id){
-                    ctx.lineWidth = 8;
-                    ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2, 1125);
+                    ctx.lineWidth = 4;
+                    ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2, 540);
                     ctx.globalAlpha = this.alpha;
-                    ctx.lineTo(this.x * 100, this.y * 100);
+                    ctx.lineTo(this.x * 42, this.y * 42);
                     if (display.pointId) {
                         ctx.globalAlpha = 1;
                         ctx.fillStyle = '#ffffff';
-                        ctx.fillText(String(id), this.x * 100, this.y * 100 + 100);
+                        ctx.fillText(String(id), this.x * 42, this.y * 42 + 42);
                     }
                     ctx.restore();
                 }
@@ -706,7 +707,7 @@ function gaming() {
                 }
             }
             class text{
-                constructor(x = 0, y = 0, eulerAngle = 0, text = '', font = '100px Phigros, Phigros cn, Tw Cen MT', alpha = 1, color = {r: 255, g: 255, b: 255}) {
+                constructor(x = 0, y = 0, eulerAngle = 0, text = '', font = '42px Phigros, Phigros cn, Tw Cen MT', alpha = 1, color = {r: 255, g: 255, b: 255}) {
                     this.x = x;
                     this.y = y;
                     this.eulerAngle = eulerAngle;
@@ -718,15 +719,15 @@ function gaming() {
                 draw(id){
                     ctx.fillStyle = `rgb(${this.color.r}, ${this.color.g}, ${this.color.b})`;
                     ctx.strokeStyle = `rgb(${this.color.r}, ${this.color.g}, ${this.color.b})`;
-                    ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2 + this.x * 100, 1125 + this.y * 100);
+                    ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2 + this.x * 42, 540 + this.y * 42);
                     ctx.rotate(this.eulerAngle * Math.PI / 180);
                     ctx.globalAlpha = this.alpha;
                     ctx.font = this.font;
                     ctx.fillText(this.text, 0, 0);
-                    ctx.font = '100px Phigros, Phigros cn, Tw Cen MT';
+                    ctx.font = '42px Phigros, Phigros cn, Tw Cen MT';
                     if (display.textId) {
                         ctx.globalAlpha = 1;
-                        ctx.fillText(String(id), 0, 100);
+                        ctx.fillText(String(id), 0, 42);
                     }
                     ctx.restore();
                 }
@@ -826,7 +827,7 @@ function gaming() {
                         $('#ui-display-lines>ul').empty();
                         spectral.notes = [];
                         spectral.lines = [];
-                        addBlock(0, 0, 0, 1500, 1);
+                        addBlock(0, 0, 0, 635, 1);
                     }
                 }
                 removeAll() {
@@ -851,7 +852,7 @@ function gaming() {
                     ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2, $('#canvas').attr('height') / 2);
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'bottom';
-                    ctx.font = '100px Phigros, Phigros cn, Tw Cen MT'
+                    ctx.font = '42px Phigros, Phigros cn, Tw Cen MT'
                     ctx.save();
                     for (let i = 0; i < spectral.textMoves.length; i++) {
                         while (!spectral.texts[spectral.textMoves[i].textId]) {
@@ -893,17 +894,17 @@ function gaming() {
                             } else {
                                 $('#canvas').css('width', $('body').height() * 0.8 / 3 * 4);
                             }
-                            $('#canvas').attr('height', 9000);
+                            $('#canvas').attr('height', 3300);
                             $('#canvas').css({'height': 'auto'});
                             display.miss = true;
                             if (edit.type == 'note') {
                                 $('#canvas').unbind('mousemove').on('mousemove', (e) => {
                                     let rect = cvs.getBoundingClientRect();
-                                    mouseX = Math.floor((e.clientX - rect.left) * (cvs.width / rect.width) - 1500);
-                                    mouseY = Math.floor(0 - ((e.clientY - rect.top) * (cvs.height / rect.height) - 8900));
+                                    mouseX = Math.floor((e.clientX - rect.left) * (cvs.width / rect.width) - 960);
+                                    mouseY = Math.floor(0 - ((e.clientY - rect.top) * (cvs.height / rect.height) - 3258));
                                     if ($('.ui-menu-buttonFocus[data-list="editAlign"]').attr('data-focus') == 'true') {
-                                        mouseX = Math.round(mouseX / 100) * 100;
-                                        mouseY = Math.round(mouseY / 50) * 50;
+                                        mouseX = Math.round(mouseX / 42) * 42;
+                                        mouseY = Math.round(mouseY / 21) * 21;
                                     }
                                     $('#canvas').unbind('mousemove');
                                 });
@@ -922,24 +923,24 @@ function gaming() {
                                         noteImg = imgs.eTap;
                                         break;
                                 }
-                                ctx.setTransform(1, 0, 0, 1, 1500, 8900);
+                                ctx.setTransform(1, 0, 0, 1, 960, 3258);
                                 ctx.globalAlpha = 0.8;
                                 if (edit.noteType == 'hold') {
-                                    ctx.drawImage(noteImg, mouseX - 200, 0 - (mouseY + 300), 400, 300);
+                                    ctx.drawImage(noteImg, mouseX - 84, 0 - (mouseY + 126 - 42), 168, 126);
                                 } else {
-                                    ctx.drawImage(noteImg, mouseX - 200, 0 - (mouseY + 95), 400, 100);
+                                    ctx.drawImage(noteImg, mouseX - 84, 0 - (mouseY + 95 - 42), 168, 42);
                                 }
                                 $('#canvas').unbind('click').click(() => {
                                     if ($('.ui-menu-buttonFocus[data-list="editAnimationStartTop"]').attr('data-focus') == 'true') {
-                                        mouseY = 9000;
+                                        mouseY = 3300;
                                     }
                                     editLine = Number(editLine);
-                                    addNote(editLine, mouseX / 100, mouseY / 100, edit.noteType);
+                                    addNote(editLine, mouseX / 42, mouseY / 42, edit.noteType);
                                     if ($('.ui-menu-buttonFocus[data-list="editAutoDownAnimation"]').attr('data-focus') == 'true') {
                                         if($('.ui-menu-buttonFocus[data-list="editAnimationStartTop"]').attr('data-focus') == 'true') {
-                                            addAnimation('note', {line:editLine,note: spectral.notes.length - 1,x: mouseX / 100,y: mouseY / 100,endX: mouseX / 100, endY: 'down',type: edit.noteType,startTime: time - mouseY / 10 * 1,endTime: time});
+                                            addAnimation('note', {line:editLine,note: spectral.notes.length - 1,x: mouseX / 42,y: mouseY / 42,endX: mouseX / 42, endY: 'down',type: edit.noteType,startTime: time - mouseY / 10 * 1,endTime: time});
                                         } else {
-                                            addAnimation('note', {line:editLine,note: spectral.notes.length - 1,x: mouseX / 100,y: mouseY / 100,endX: mouseX / 100, endY: 'down',type: edit.noteType,startTime: time,endTime: time + mouseY / 10 * 1});
+                                            addAnimation('note', {line:editLine,note: spectral.notes.length - 1,x: mouseX / 42,y: mouseY / 42,endX: mouseX / 42, endY: 'down',type: edit.noteType,startTime: time,endTime: time + mouseY / 10 * 1});
                                         }
                                         
                                     }
@@ -950,32 +951,31 @@ function gaming() {
                                 });
                             }
                         }
-                        for(let i = 0;i < 4;i++){
+                        for(let i = 0;i < 3;i++){
                             ctx.globalAlpha = 1;
-                            ctx.setTransform(1, 0, 0, 1, 0, -100);
+                            ctx.setTransform(1, 0, 0, 1, 0, 40);
                             ctx.fillStyle = '#00ccffdd';
-                            if (i != 3) ctx.fillRect(0, 2250 * (i + 1), 3000, 16);
-                            ctx.setTransform(1, 0, 0, 1, 0, 2250 * i - 100);
+                            if (i != 2) ctx.fillRect(0, 1080 * (i + 1), 1920, 7);
+                            ctx.setTransform(1, 0, 0, 1, 0, 1080 * i + 40);
                             ctx.fillStyle = '#ffffffdd';
-                            for(let i = 0;i < 5;i++){
-                                ctx.fillRect(0, 375 * (i + 1), 3000, 4);
+                            for(let j = 0;j < 5;j++){
+                                ctx.fillRect(0, 1080 / 6 * (j + 1), 1920, 4);
                             }
                         }
                         spectral.lines[editLine].draw(editLine);
                     } else if(edit.open) {
                         if (edit.type == 'addBlock') {
-                            console.log('adb');
                             addBlock(0, 0);
                             spectral.blockMoves.push({block: spectral.blocks.length - 1, x: 0, y: 0, eulerAngle: 0, width: 15, alpha: 1, endX: 0, endY: 0, endEulerAngle: 0, endWidth: 15, endAlpha: 1, startTime: 0, endTime: 0});
                             edit.open = false;
                         } else if (edit.type == 'addLine') {
-                            console.log('adl');
                             addLine(0, 0);
                             edit.open = false;
                         }
                     } else {
                         display.miss = false;
-                        if ($('#canvas').attr('height') != 2550) {
+                        if ($('#canvas').attr('height') != 1080) {
+                            $('#canvas').attr('height', 1080);
                             if (settings.listProportion == '16:9' || settings.listProportion == undefined) {
                                 $('#canvas').css('width', $('body').height() * 0.8 / 9 * 16);
                             } else {
@@ -984,9 +984,9 @@ function gaming() {
                             $('#canvas').css({'height': '80%'});
                         }
                         for(var i = 0; i < spectral.graphics.length; i++) {
-                            ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2, 1125);
+                            ctx.setTransform(1, 0, 0, 1, $('#canvas').attr('width') / 2, 540);
                             ctx.beginPath();
-                            ctx.moveTo(spectral.graphics[i][0].x * 100, spectral.graphics[i][0].y * 100)
+                            ctx.moveTo(spectral.graphics[i][0].x * 42, spectral.graphics[i][0].y * 42)
                             for (let j = 0; j < spectral.graphics[i].length; j++) {
                                 spectral.graphics[i][j].draw(i + '-' + j);
                             }
